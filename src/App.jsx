@@ -2,35 +2,23 @@
 import './styles/global.css';
 import { useState } from 'react';
 import AdminLogin from './admin/AdminLogin';
+import AdminDashboard from './admin/AdminDashboard';
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
 
+  const handleLoginSuccess = () => {
+    setIsAdmin(true);
+  };
+
+  const handleLogout = () => {
+    setIsAdmin(false);
+  };
+
   return (
     <>
       {isAdmin ? (
-        <div style={{
-          minHeight: '100vh',
-          background: 'var(--white)',
-          color: 'var(--black)',
-          fontFamily: 'var(--font)',
-          padding: '40px 20px',
-          textAlign: 'center',
-        }}>
-          <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>
-            Admin Panel
-          </h1>
-          <p style={{ color: 'var(--gray-600)' }}>
-            Welcome, mahathir — admin dashboard loading...
-          </p>
-          <button
-            className="btn btn-outline"
-            onClick={() => setIsAdmin(false)}
-            style={{ marginTop: '2rem' }}
-          >
-            Back to Home
-          </button>
-        </div>
+        <AdminDashboard onLogout={handleLogout} />
       ) : (
         <div
           style={{
@@ -80,6 +68,10 @@ function App() {
             </button>
           </div>
         </div>
+      )}
+
+      {!isAdmin && (
+        <AdminLogin onLoginSuccess={handleLoginSuccess} />
       )}
     </>
   );
